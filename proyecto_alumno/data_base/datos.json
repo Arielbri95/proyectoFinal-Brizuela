@@ -1,0 +1,26 @@
+[
+  {
+    "nombre": "hueso",
+    "nota1": 9,
+    "nota2": 10,
+    "promedio": 9.5
+  },
+  {
+    "nombre": "roco",
+    "nota1": 2,
+    "nota2": 4,
+    "promedio": 6
+  },
+  {
+    "nombre": "kevin",
+    "nota1": 6,
+    "nota2": 8,
+    "promedio": 7
+  },
+  {
+    "nombre": "gordo",
+    "nota1": 7,
+    "nota2": 7,
+    "promedio": 7
+  }
+]

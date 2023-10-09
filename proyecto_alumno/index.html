@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+        <title>Gestion de alumnos</title>
+	<link rel="stylesheet" href="css/styles.css">
+	<!-- SweetAlert2 CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+	<!-- SweetAlert2 JavaScript -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="src/main.js"></script>
+    <style>
+        .content {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" id="inicioLink">Inicio</a>
+        <a href="#" id="cargarAlumnoLink">Cargar Alumno</a>
+        <a href="#" id="verAlumnosLink">Ver Alumnos</a>
+    </div>
+
+    <div id="inicioLinkContent" class="content">
+        <h1>Bienvenido/a</h1>
+        <p>Este es un sistema para gestionar las notas de diferentes alumnos.
+                   <br> Creado por Ariel Brizuela.</p>
+		<div id="nombreMaestro">
+			<label for="nombre">Nombre del Maestro:</label>
+			<input type="text" id="nombre" placeholder="Ingrese su nombre maestro" required>
+			<button onclick="cambiarNombre()">Ingresar</button>
+		</div>
+		
+    </div>
+	
+
+    <div id="cargarAlumnoLinkContent" class="content">
+		<h1>Formulario de Ingreso de Alumno</h1>
+
+		<form id="formularioAlumno" class="formulario">
+			
+			<label for="nombreAlumno">Nombre del Alumno:</label>
+			<input type="text" id="nombreAlumno" name="nombreAlumno" required>
+			<br>
+
+			<label for="nota1">Nota de Matemáticas:</label>
+			<input type="number" id="nota1" name="nota1" min="0" max="10" required>
+			<br>
+
+			<label for="nota2">Nota de Lengua:</label>
+			<input type="number" id="nota2" name="nota2" min="0" max="10" required>
+			<br>
+
+			<input type="submit" value="Guardar Alumno">
+		</form>
+    </div>
+
+    <div id="verAlumnosLinkContent" class="content">
+        <table border="1" id="tablaNotas">
+			  <thead>
+					<tr>
+					  <th>Nombre</th>
+					  <th>Matemáticas</th>
+					  <th>Lengua</th>
+					  <th>Promedio</th>
+					</tr>
+				  </thead>
+				  <tbody id="tablaBody" style="display: table-row-group;">
+				  </tbody>
+			</table>
+		</table>
+		<div id="mensajeSinAlumnos" >
+			<h1>No hay alumnos cargados.</h1>
+		</div>
+    </div>
+
+    <script>
+		//funcion para barra de navegacion
+        document.addEventListener("DOMContentLoaded", function () {
+            function mostrarContenido(id) {
+                const contentContainers = document.querySelectorAll(".content")
+                contentContainers.forEach(function (container) {
+                    container.classList.remove("active")
+                })
+                document.getElementById(id + "Content").classList.add("active")
+            }
+
+            const enlacesNavbar = document.querySelectorAll(".navbar a")
+            enlacesNavbar.forEach(function (enlace) {
+                enlace.addEventListener("click", function (e) {
+                    e.preventDefault()
+                    const id = this.getAttribute("id")
+                    mostrarContenido(id)
+                })
+            })
+
+            mostrarContenido("inicioLink")
+        })
+		
+		window.onload = function() {
+			let nombreGuardado = sessionStorage.getItem("nombreMaestro")
+			if (nombreGuardado) {
+				let mensajeBienvenida = document.querySelector(".content h1")
+				mensajeBienvenida.innerHTML = "Bienvenido/a, " + nombreGuardado + "!"
+			}
+			//funcion para tabla de alumnos y promedios
+			listarAlumnos()
+		}
+
+		cambiarNombre() //nombre del profesor
+		
+		//funcion para enviar formulario
+		const formularioAlumno = document.getElementById("formularioAlumno")
+		formularioAlumno.addEventListener("submit", function (e) {
+				e.preventDefault()
+				let alumno = crearAlumno()
+				enviarFormulario(alumno)
+						
+				
+				document.getElementById("formularioAlumno").reset()
+		})
+
+
+		
+
+
+    </script>
+</body>
+</html>
